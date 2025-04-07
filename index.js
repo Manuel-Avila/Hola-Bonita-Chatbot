@@ -1,15 +1,17 @@
 const venom = require("venom-bot");
 
+const goBackOption = '↩️ Escribe "0" para volver al menú principal.'
+
 const menus = {
-  mainMenu: `¡HOLA BONITA! 🎀  
+  mainMenu: `*¡HOLA BONITA!* 🎀  
     Regalos Personalizados • Globos • Decoración  
     Elige una opción:  
-    ⏰ 1 Horario y contacto  
-    📍 2 Ubicación de la tienda  
-    📦 3 Ver productos/catálogo  
-    💵 4 Cotizar producto  
-    🧾 5 Solicitar factura  
-    🛍️ 6 Hacer pedido  
+    ⏰ 1. Horario y contacto  
+    📍 2. Ubicación de la tienda  
+    📦 3. Ver productos/catálogo  
+    💵 4. Cotizar producto  
+    🧾 5. Solicitar factura  
+    🛍️ 6. Hacer pedido  
     *Responde solo con el número de la opción.* `,
   workshift: `⏰ Horario de atención:  
     Lunes a Viernes: 8AM - 9PM  
@@ -19,25 +21,25 @@ const menus = {
     Teléfono: 612 185 7954  
     Correo: holabonitamexico@gmail.com  
 
-    Escribe "0" para volver al menú principal.`,
+    ${goBackOption}`,
   location: `📍 Dirección:  
     Jalisco 1420 e/México y Melitón Albáñez, La Paz, México  
     (FRENTE A PREPARATORIA CBTIS 62)  
 
-    Escribe "0" para volver al menú principal.`,
+    ${goBackOption}`,
   products: `📦 OPCIONES:  
-    1. Descargar catálogo completo (PDF)  
-    2. Buscar producto específico  
+    📄 1. Descargar catálogo completo (PDF)  
+    🛍️ 2. Buscar producto específico  
     Envía:  
     • "1" para recibir el PDF con todos nuestros productos  
     • "2" para describir lo que buscas (ej: "globo corazón dorado")  
     • "0" para volver  
     *Próximamente tendremos categorías organizadas.*`,
   quote: `💵 Para cotizar envíanos:  
-    1. Foto del producto 📸  
-    2. Descripción (ej: "10 globos plateados con caja personalizada")  
+    📸 1. Foto del producto  
+    📕 2. Descripción (ej: "10 globos plateados con caja personalizada")  
     *Te enviaremos precios en menos de 15 minutos.*  
-    Escribe "0" para volver.`,
+    ${goBackOption}`,
   invoice: `🧾 DATOS REQUERIDOS PARA FACTURA:  
     1. Nombre completo  
     2. RFC (12-13 caracteres, OBLIGATORIO)  
@@ -48,7 +50,7 @@ const menus = {
     ana@gmail.com"  
     *Un asesor te enviará la factura en 15 minutos.*  
 
-    Escribe "0" para cancelar.`,
+    ${goBackOption}`,
   order: `🛍️ PARA REALIZAR TU PEDIDO:  
     Describe:  
     1. Producto(s) deseado(s)  
@@ -57,10 +59,10 @@ const menus = {
     "5 globos de letras doradas para el 25/05 a las 2PM"  
     *Un asesor confirmará disponibilidad y precio.*  
 
-    Escribe "0" para volver. `,
+    ${goBackOption} `,
   giveDescription: `Describa el producto que busca:
 
-  Escribe "0" para volver una vez que hayas terminado.
+  ${goBackOption}
   `
 };
 
