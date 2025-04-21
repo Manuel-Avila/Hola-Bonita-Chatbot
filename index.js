@@ -112,6 +112,7 @@ venom
   .create({
     session: "bot-session",
     multidevice: true,
+    headless: 'new',
   })
   .then((client) => start(client))
   .catch((error) => console.log("Error al iniciar el bot:", error));
@@ -147,15 +148,15 @@ function start(c) {
   });
 }
 
-async function sendText(user, text) {
-  await client.sendText(user, text).catch(e => {
+function sendText(user, text) {
+  return client.sendText(user, text).catch(e => {
     console.log(`Error: ${e.message}`)
   });
 }
 
 // Ejemplo sendFile(user, './assets/test.pdf', 'test.pdf', 'Pdf')
-async function sendFile(user, path, name, description = '') {
-  await client.sendFile(
+function sendFile(user, path, name, description = '') {
+  return client.sendFile(
     user,
     path,
     name,
@@ -166,8 +167,8 @@ async function sendFile(user, path, name, description = '') {
 }
 
 
-async function sendImage(user, path, name, description = '') {
-  await client.sendImage(
+function sendImage(user, path, name, description = '') {
+  return client.sendImage(
     user,
     path,
     name,
@@ -183,7 +184,7 @@ async function handleMenuNavegation(user, userMessage) {
   const userInputOptions = ['giveDescription', 'quote', 'invoice', 'order'];
 
   if(nextMenu === 'productsPDF') {
-    sendFile(user, './assets/test.pdf', 'test.pdf')
+    await sendFile(user, './assets/test.pdf', 'test.pdf')
     return;
   }
 
@@ -194,11 +195,11 @@ async function handleMenuNavegation(user, userMessage) {
 
   // Entra si escogio una opcion invalida
   if(!nextMenu) {
-    sendText(user, invalidInputMessage);
-    sendText(user, menus[currentMenu]);
+    await sendText(user, invalidInputMessage);
+    await sendText(user, menus[currentMenu]);
     return;
   }
 
   userState[user] = nextMenu;
-  sendText(user, menus[nextMenu]);
+  await sendText(user, menus[nextMenu]);
 }
