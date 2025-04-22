@@ -1,6 +1,7 @@
 const venom = require("venom-bot");
 
-const goBackOption = '↩️ Escribe "0" para volver al menú principal.'
+const goBackOption = '↩️ Escribe "0" para volver al menú principal.';
+const agentGroupId = '';
 
 const menus = {
   mainMenu: `*¡HOLA BONITA!* 🎀  
@@ -19,14 +20,10 @@ const menus = {
     Domingos: Cerrado  
     📞 Contacto:  
     Teléfono: 612 185 7954  
-    Correo: holabonitamexico@gmail.com  
-
-    ${goBackOption}`,
+    Correo: holabonitamexico@gmail.com`,
   location: `📍 Dirección:  
     Jalisco 1420 e/México y Melitón Albáñez, La Paz, México  
-    (FRENTE A PREPARATORIA CBTIS 62)  
-
-    ${goBackOption}`,
+    (FRENTE A PREPARATORIA CBTIS 62) `,
   products: `📦 OPCIONES:  
     📄 1. Descargar catálogo completo (PDF)  
     🛍️ 2. Buscar producto específico  
@@ -62,7 +59,7 @@ const menus = {
     ${goBackOption} `,
   giveDescription: `Describa el producto que busca:
 
-  ${goBackOption}
+    ${goBackOption}
   `
 };
 
@@ -74,12 +71,6 @@ const menuNavegation = {
     '4': 'quote',
     '5': 'invoice',
     '6': 'order'
-  },
-  workshift: {
-    '0': 'mainMenu'
-  },
-  location: {
-    '0': 'mainMenu'
   },
   products: {
     '0': 'mainMenu',
@@ -182,9 +173,13 @@ async function handleMenuNavegation(user, userMessage) {
   const currentMenu = userState[user];
   const nextMenu = menuNavegation[currentMenu]?.[userMessage];
   const userInputOptions = ['giveDescription', 'quote', 'invoice', 'order'];
+  const needAgent = ['quote', 'invoice', 'order', 'giveDescription'];
+  const redirectToMainMenu = ['workshift', 'location'];
 
   if(nextMenu === 'productsPDF') {
-    await sendFile(user, './assets/test.pdf', 'test.pdf')
+    await sendFile(user, './assets/test.pdf', 'test.pdf');
+    userState[user] = 'mainMenu';
+    await sendText(user, menus['mainMenu']);
     return;
   }
 
@@ -202,4 +197,18 @@ async function handleMenuNavegation(user, userMessage) {
 
   userState[user] = nextMenu;
   await sendText(user, menus[nextMenu]);
+
+  // Si entra en esta condicion significa que el usuario acaba de solicitar a un agente.
+  if(needAgent.includes(nextMenu)) {
+    await sendText(agentGroupId, 
+      `💬 *SE SOLICITO UN AGENTE*
+        Número del usuario: ${user.replace('@c.us', '')}`);
+    return;
+  }
+
+  if(redirectToMainMenu.includes(nextMenu)) {
+    userState[user] = 'mainMenu';
+    await sendText(user, menus['mainMenu']);
+    return;
+  }
 }
